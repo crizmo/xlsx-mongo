@@ -167,6 +167,8 @@ Note:
 5. The init function is used to setup the file path
 6. The import function imports the entire excel file to the database 
 [ It will add duplicate data if the data already exists in the database ]
+7. The schema of the data is generated dynamically based on the first row of the excel file 
+[ The first row of the excel file should contain the names of the columns ]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
