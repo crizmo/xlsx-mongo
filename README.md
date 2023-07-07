@@ -8,9 +8,9 @@
 
   <h3 align="center">XLSX-Mongo</h3>
   <p align="center">
-    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/v/image2url.svg?maxAge=3600&style=for-the-badge" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/dt/image2url?style=for-the-badge" /></a>
-    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/l/image2url?style=for-the-badge" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/v/xlsx-mongo.svg?maxAge=3600&style=for-the-badge" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/dt/xlsx-mongo?style=for-the-badge" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/l/xlsx-mongo?style=for-the-badge" /></a>
   </p>
   <p align="center">
     Import / Add data form xlsx file to mongodb
