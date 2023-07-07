@@ -14,7 +14,7 @@ const collectionName = 'test';
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(async () => {
     
-    // xlsx2mongo.upload(collectionName, showConsoleMessages).then(() => {
+    // xlsx2mongo.import(collectionName, showConsoleMessages).then(() => {
     //     mongoose.connection.close();
     // });
 

@@ -23,7 +23,7 @@ const SetupSchema = (collectionName) => {
     return Model;
 }
 
-const UploadData = async (collectionName, showConsoleMessages = true) => {
+const ImportData = async (collectionName, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
         ? console.log('Connected to MongoDB') && console.time('import')
@@ -98,5 +98,5 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
 
 
 module.exports.init = SetupInit;
-module.exports.upload = UploadData;
+module.exports.import = ImportData;
 module.exports.add = AddData;

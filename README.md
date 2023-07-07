@@ -2,27 +2,27 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/crizmo/image2url">
-    <img src="https://cdn.discordapp.com/attachments/910210865683386408/1058270655625314344/Untitled_design.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/crizmo/xlsx-mongo">
+    <img src="https://cdn.discordapp.com/attachments/1126788880906080366/1126788914137546792/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Image2Url</h3>
+  <h3 align="center">XLSX-Mongo</h3>
   <p align="center">
-    <a href="https://www.npmjs.com/package/image2url"><img src="https://img.shields.io/npm/v/image2url.svg?maxAge=3600&style=for-the-badge" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/image2url"><img src="https://img.shields.io/npm/dt/image2url?style=for-the-badge" /></a>
-    <a href="https://www.npmjs.com/package/image2url"><img src="https://img.shields.io/npm/l/image2url?style=for-the-badge" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/v/image2url.svg?maxAge=3600&style=for-the-badge" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/dt/image2url?style=for-the-badge" /></a>
+    <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/l/image2url?style=for-the-badge" /></a>
   </p>
   <p align="center">
-    Convert images to urls
+    Import / Add data form xlsx file to mongodb
     <br />
-    <a href="https://github.com/crizmo/image2url"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/crizmo/xlsx-mongo"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/crizmo/image2url">View Demo</a>
+    <a href="https://github.com/crizmo/xlsx-mongo">View Demo</a>
     ·
-    <a href="https://github.com/crizmo/image2url/issues">Report Bug</a>
+    <a href="https://github.com/crizmo/xlsx-mongo/issues">Report Bug</a>
     ·
-    <a href="https://github.com/crizmo/image2url/issues">Request Feature</a>
+    <a href="https://github.com/crizmo/xlsx-mongo/issues">Request Feature</a>
   </p>
 </div>
     
@@ -52,29 +52,32 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Convert images to urls using discord bot. 
+Import / Add data form xlsx file to mongodb
 - How it works <br>
-Images are sent to a discord channel that you specify. <br>
-The bot will then get the proxy url of the image and then return it to you. <br>
+Excel file is converted to json and then the json is imported to mongodb. <br>
+Importing to mongodb is done using mongoose. <br>
+- Why use it <br>
+It is useful when you have a lot of data in excel file and you want to import it to mongodb. <br>
+- How to use it <br>
+Check the usage section for more info. <br>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
 
-1. Make a discord bot in discord developer portal
-2. Copy the token and paste it in the .env file named `DISCORD_TOKEN`
-3. Invite the bot to your server
-4. Get the channel id of the channel where you want to send the images
-5. Paste the channel id in the .env file named `DISCORD_CHANNEL`
-6. Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
-7. Install the required packages - `discord.js, dotenv, fs`
-8. Install image2url using npm <br>
+1. Make a mongodb database
+2. Copy the connection string of the database
+3. Paste the connection string in the .env file named `MONGO_URL`
+4. Run the desired function
+5. Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
+6. Install the required packages - `mongoose , xlsx , dotenv , path`
+7. Install the package <br>
    ```sh
-   npm install image2url
+   npm install xlsx-mongo
    ```
-9. Require the package in your main file <br>
+8. Require the package in your main file <br>
    ```JS
-   const image2url = require('image2url');
+   const xlsxMongo = require('xlsx-mongo');
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -82,18 +85,42 @@ The bot will then get the proxy url of the image and then return it to you. <br>
 
 ```javascript
 
-image2url.init({
-    token: process.env.DISCORD_TOKEN,
-    channel: process.env.DISCORD_CHANNEL
+const xlsx2mongo = require('../index');
+const mongoose = require('mongoose');
+require('dotenv').config()
+
+const path = require('path');
+const filePath = path.join(__dirname, 'Test2.xlsx'); // Path to the excel file
+
+xlsx2mongo.init(filePath);
+// Init function is used to setup the file path
+
+const collectionName = 'test';
+// Collection name is the name of the collection in which you want to import the data
+
+// Set MONGO_URL in .env file to your mongodb connection string
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }) 
+.then(async () => {
+    
+    xlsx2mongo.import(collectionName, showConsoleMessages)
+    .then(() => {
+        mongoose.connection.close();
+    }); // you can remove the .then() if you don't want to close the connection
+    
+    // Import function imports the entire excel file to the database
+
+    xlsx2mongo.add(collectionName, filePath, showConsoleMessages)
+    .then(() => {
+        mongoose.connection.close();
+    }); // you can remove the .then() if you don't want to close the connection
+    
+    // Add function adds the data from the excel file to the database
+    
+})
+.catch((err) => {
+    console.error('Error:', err);
 });
 
-// Init function is used to setup the bot token and the channel id where the images will be sent
-
-image2url.upload('tests/kurizu.jpg', 'kurizu pfp').then(url => {
-    console.log(url);
-});
-
-// Upload function uploads the image to the channel and then fetches its url
 ```
 Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
 
@@ -102,31 +129,51 @@ Check env_example file for more info - <a href="/tests/.env_example">env_example
 ## Usage
 
 ```javascript
-const image2url = require('image2url');
+const xlsx2mongo = require('xlsx-mongo');
+const mongoose = require('mongoose');
 require('dotenv').config()
+const path = require('path');
 
-image2url.init({
-    token: process.env.DISCORD_TOKEN,
-    channel: process.env.DISCORD_CHANNEL
-});
+const filePath = path.join(__dirname, 'Test2.xlsx');
+const showConsoleMessages = false;
 
-image2url.upload('tests/kurizu.jpg', 'kurizu pfp').then(url => {
-    console.log(url);
+xlsx2mongo.init(filePath);
+
+const collectionName = 'test';
+
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(async () => {
+    
+    xlsx2mongo.import(collectionName, showConsoleMessages)
+    .then(() => {
+        mongoose.connection.close();
+    }); // you can remove the .then() if you don't want to close the connection
+
+    xlsx2mongo.add(collectionName, filePath, showConsoleMessages)
+    .then(() => {
+        mongoose.connection.close();
+    }); // you can remove the .then() if you don't want to close the connection
+})
+.catch((err) => {
+    console.error('Error:', err);
 });
 ```
 
 Note: 
-1. tests/kurizu.jpg is the path to the image you want to send. <br>
-2. kurizu pfp is the name of the image. <br>
-3. The url will have the name that you specified. which in this case is kurizu pfp. <br>
+1. Remember to set the MONGO_URL in .env file
+2. The collection name is the name of the collection in which you want to import the data
+3. The file path is the path to the excel file
+4. The showConsoleMessages is a boolean value which is used to show the console messages or not
+5. The init function is used to setup the file path
+6. The import function imports the entire excel file to the database 
+[ It will add duplicate data if the data already exists in the database ]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 ## For more information on how to use it visit
 
-- [Github](https://github.com/crizmo/image2url)
-- [Example](https://github.com/crizmo/image2url/tree/main/tests)
+- [Github](https://github.com/crizmo/xlsx-mongo)
+- [Example](https://github.com/crizmo/xlsx-mongo/tree/main/tests)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -142,7 +189,7 @@ Note:
     - [ ] Wiki
 - [ ] Add Support for more platforms
 
-See the [open issues](https://github.com/crizmo/image2url/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/crizmo/xlsx-mongo/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -170,4 +217,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 Package Made by: `kurizu.taz` on discord <br>
-Github - [https://github.com/crizmo/image2url](https://github.com/crizmo/image2url)
+Github - [https://github.com/crizmo/xlsx-mongo](https://github.com/crizmo/xlsx-mongo)
