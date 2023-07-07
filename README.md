@@ -13,7 +13,7 @@
     <a href="https://www.npmjs.com/package/xlsx-mongo"><img src="https://img.shields.io/npm/l/xlsx-mongo?style=for-the-badge" /></a>
   </p>
   <p align="center">
-    Import / Add data form xlsx file to mongodb
+    Import / Add data from xlsx file to mongodb
     <br />
     <a href="https://github.com/crizmo/xlsx-mongo"><strong>Explore the docs »</strong></a>
     <br />
@@ -52,7 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Import / Add data form xlsx file to mongodb
+Import / Add data from xlsx file to mongodb
 - How it works <br>
 Excel file is converted to json and then the json is imported to mongodb. <br>
 Importing to mongodb is done using mongoose. <br>
@@ -184,7 +184,7 @@ Note:
 - [ ] Add Changelog
 - [ ] Add Tests
 - [ ] Add Additional Templates w/ Examples
-- [ ] Add Support for more image formats
+- [ ] Add More Functions
 - [ ] Documentation
     - [ ] Website
     - [ ] Examples
