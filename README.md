@@ -85,7 +85,7 @@ Check the usage section for more info. <br>
 
 ```javascript
 
-const xlsx2mongo = require('../index');
+const xlsx2mongo = require('xlsx-mongo');
 const mongoose = require('mongoose');
 require('dotenv').config()
 
