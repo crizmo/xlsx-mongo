@@ -1,14 +1,27 @@
 {
   "name": "xlsx-mongo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Import / Add data form XLSX file to Mongodb",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crizmo/xlsx-mongo.git",
+    "homepage": "https://github.com/crizmo/xlsx-mongo#readme"
+  },
+  "keywords": [
+    "xlsx",
+    "mongodb",
+    "import",
+    "add",
+    "data",
+    "file",
+    "mongoose"
+  ],
+  "author": "Kurizu",
+  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.3.1",
     "mongoose": "^7.3.2",
