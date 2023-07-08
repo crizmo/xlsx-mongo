@@ -23,7 +23,7 @@
   "author": "Kurizu",
   "license": "MIT",
   "dependencies": {
-    "mongoose": "^7.3.2",
-    "xlsx": "^0.18.5"
+    "exceljs": "^4.3.0",
+    "mongoose": "^7.3.2"
   }
 }

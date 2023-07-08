@@ -1,20 +1,29 @@
-const xlsx = require('xlsx');
+const ExcelJS = require('exceljs');
 const mongoose = require('mongoose');
 
-let workbook, sheetName, worksheet, jsonData, columnNames
+let workbook, worksheet, jsonData, columnNames ;
 let schema = {}
 
-const SetupInit = (filePath) => {
-    workbook = xlsx.readFile(filePath);
-    sheetName = workbook.SheetNames[0];
-    worksheet = workbook.Sheets[sheetName];
-    jsonData = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
-    columnNames = jsonData.shift();
+const SetupInit = async (filePath) => {
+    workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
+    worksheet = workbook.worksheets[0];
+    jsonData = [];
 
+    worksheet.eachRow((row) => {
+        const rowData = [];
+        row.eachCell((cell) => {
+            rowData.push(cell.value);
+        });
+        jsonData.push(rowData);
+    });
+
+    columnNames = jsonData.shift();
     columnNames.forEach((columnName) => {
         schema[columnName] = String;
     });
-}
+};
+
 
 const SetupSchema = (collectionName) => {
     const Schema = mongoose.Schema;
@@ -33,6 +42,7 @@ const ImportData = async (collectionName, showConsoleMessages = true) => {
         showConsoleMessages
             ? console.log('No data found, inserting data...')
             : null;
+
         await YourModel.insertMany(
             jsonData.map((row) => {
                 const doc = {};
@@ -54,7 +64,7 @@ const ImportData = async (collectionName, showConsoleMessages = true) => {
 };
 
 const AddData = async (collectionName, filePath, showConsoleMessages = true) => {
-    SetupInit(filePath);
+    await SetupInit(filePath);
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
         ? console.log('Connected to MongoDB') && console.time('import')
@@ -93,9 +103,7 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
     showConsoleMessages
         ? console.log('Data added successfully to an existing collection.') && console.timeEnd('import')
         : null;
-        
 };
-
 
 module.exports.init = SetupInit;
 module.exports.import = ImportData;

@@ -70,7 +70,7 @@ Check the usage section for more info. <br>
 3. Paste the connection string in the .env file named `MONGO_URL`
 4. Run the desired function
 5. Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
-6. Install the required packages - `mongoose , xlsx , dotenv , path`
+6. Install the required packages - `mongoose , exceljs , dotenv , path`
 7. Install the package <br>
    ```sh
    npm install xlsx-mongo
