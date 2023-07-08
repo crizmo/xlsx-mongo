@@ -23,7 +23,6 @@
   "author": "Kurizu",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.3.1",
     "mongoose": "^7.3.2",
     "xlsx": "^0.18.5"
   }
