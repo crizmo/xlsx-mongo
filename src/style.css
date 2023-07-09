@@ -1,0 +1,79 @@
+body{
+  background-image: url('https://webassets.mongodb.com/_com_assets/cms/background-urdqyi519x.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'M PLUS Rounded 1c';
+  font-weight: 500;
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.navbar {
+  background-color: transparent !important;
+  font-family: 'M PLUS Rounded 1c';font-size: 22px;
+  font-weight:bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+.title{
+  font-size: 30px;
+  color: #55db2d;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+ul li{
+  color: #b8b8b8;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: 'M PLUS Rounded 1c';
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.left{
+  margin-top: 100px;
+  color: #fff;
+  text-align: left;
+  font-family: 'M PLUS Rounded 1c';
+}
+.left>.title{
+  font-size: 50px;
+  text-decoration: underline;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+.left>.subtitle{
+  font-size: 20px;
+  font-family: 'M PLUS Rounded 1c';
+  font-weight: 700;
+  text-shadow: 2px 2px 4px #000000;
+}
+.left>button{
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  margin-top: 50px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family:sans-serif;
+  color: #fff;
+}
