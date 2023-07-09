@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>xlsx-mongo</title>
@@ -17,12 +16,9 @@
                 alertDiv.className = "alert alert-success alert-dismissible fade show";
                 alertDiv.setAttribute("role", "alert");
                 var alertMessage = document.createTextNode("Text copied to clipboard!");
-
                 alertDiv.appendChild(alertMessage);
-
                 var alertContainer = document.getElementById("alertContainer");
                 alertContainer.appendChild(alertDiv);
-
                 setTimeout(function () {
                     alertDiv.remove();
                 }, 2000);
@@ -31,7 +27,7 @@
             });
         }
     </script>
-
+</head>
 <body>
     <div class="overlay">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
@@ -69,7 +65,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container text-center" id="about">
             <div class="col d-flex align-items-center">
                 <div class="left">
@@ -82,17 +77,10 @@
                             <li>Import data</li>
                             <li>Add data</li>
                         </ul>
-
-                        <b>How it works</b><br>
-                        <ul>
-                            <li>Excel file is converted to json and then the json is imported to mongodb. </li>
-                            <li>Importing to mongodb is done using mongoose.</li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="container text-center" id="about">
             <div class="col d-flex align-items-center">
                 <div class="left">
@@ -105,12 +93,8 @@
                     <div class="subtitle">
                         <img src="https://cdn.discordapp.com/attachments/1126788880906080366/1127488135866089552/functions.png"
                             alt="functions">
-                        <br>
-                        If you want a more detailed documentation, click <a target="_blank"
-                            href="https://github.com/crizmo/xlsx-mongo/tree/main#readme">here</a>
                     </div>
                     <br> <br>
-
                     <div class="title">License</div>
                     <div class="subtitle">
                         Distributed under the MIT License. See <a target="_blank"
@@ -129,7 +113,5 @@
             </div>
         </div>
     </div>
-
 </body>
-
 </html>
