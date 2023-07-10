@@ -1,6 +1,6 @@
 {
   "name": "xlsx-mongo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Import / Add data from XLSX file to Mongodb",
   "main": "index.js",
   "scripts": {
