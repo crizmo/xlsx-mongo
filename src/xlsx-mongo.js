@@ -26,11 +26,16 @@ const SetupInit = async (filePath) => {
 
 
 const SetupSchema = (collectionName) => {
-    const Schema = mongoose.Schema;
-    const schemaObj = new Schema(schema);
-    const Model = mongoose.model(collectionName, schemaObj) || mongoose.model(collectionName, schemaObj, new Schema({ collection: collectionName }));
-    return Model;
-}
+    let YourModel;
+    try {
+        YourModel = mongoose.model(collectionName);
+    } catch (error) {
+        const Schema = mongoose.Schema;
+        const schemaObj = new Schema(schema);
+        YourModel = mongoose.model(collectionName, schemaObj);
+    }
+    return YourModel;
+};
 
 const ImportData = async (collectionName, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
