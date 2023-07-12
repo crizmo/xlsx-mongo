@@ -101,20 +101,52 @@ const collectionName = 'test';
 // Set MONGO_URL in .env file to your mongodb connection string
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }) 
 .then(async () => {
-    
-    xlsx2mongo.import(collectionName, showConsoleMessages)
-    .then(() => {
-        mongoose.connection.close();
-    }); // you can remove the .then() if you don't want to close the connection
-    
-    // Import function imports the entire excel file to the database
 
-    xlsx2mongo.add(collectionName, filePath, showConsoleMessages)
-    .then(() => {
-        mongoose.connection.close();
-    }); // you can remove the .then() if you don't want to close the connection
-    
-    // Add function adds the data from the excel file to the database
+    // Import data from the Excel file to the specified collection
+    xlsx2mongo.import(collectionName, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after import
+    });
+
+    // // Add data from the Excel file to the specified collection
+    xlsx2mongo.add(collectionName, filePath, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after adding
+    });
+
+    // Export data from the specified collection to the Excel file
+    const exportFilePath = path.join(__dirname, 'Export.xlsx');
+    xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages).then(() => {
+      mongoose.connection.close(); // Close the MongoDB connection after exporting
+    });
+
+    // Delete data from the specified collection
+    xlsx2mongo.delete(collectionName, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after deleting
+    });
+
+    // Update data from the specified collection
+    //  to update single row
+    const updateCriteria = { 'Name': 'efrwdawd' };
+    const updateData = { $set: { 'Name': 'John Doe' } };
+    xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after updating
+    }); 
+
+    // to update multiple rows
+    const updateCriteriaMultiple = { 'Name': 'dwgdrthg', 'Address': 'grgdrgd' };
+    const updateDataMultiple = { $set: { 'Name': 'Kurizu', 'Address': 'poopy' } };
+    xlsx2mongo.update(collectionName, updateCriteriaMultiple, updateDataMultiple, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after updating
+    });
+
+    // Find data from the specified collection
+    const findCriteria = { 'Name': 'Kurizu' };   
+    xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages).then((res) => {
+        console.log(res);
+        mongoose.connection.close(); // Close the MongoDB connection after finding
+    });
+
+    // Avoid running the above functions at the same time
+    // you can remove the .then() if you don't want to close the connection
     
 })
 .catch((err) => {
@@ -144,15 +176,51 @@ const collectionName = 'test';
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(async () => {
     
-    xlsx2mongo.import(collectionName, showConsoleMessages)
-    .then(() => {
-        mongoose.connection.close();
-    }); // you can remove the .then() if you don't want to close the connection
+    // Import data from the Excel file to the specified collection
+    xlsx2mongo.import(collectionName, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after import
+    });
 
-    xlsx2mongo.add(collectionName, filePath, showConsoleMessages)
-    .then(() => {
-        mongoose.connection.close();
-    }); // you can remove the .then() if you don't want to close the connection
+    // // Add data from the Excel file to the specified collection
+    xlsx2mongo.add(collectionName, filePath, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after adding
+    });
+
+    // Export data from the specified collection to the Excel file
+    const exportFilePath = path.join(__dirname, 'Export.xlsx');
+    xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages).then(() => {
+      mongoose.connection.close(); // Close the MongoDB connection after exporting
+    });
+
+    // Delete data from the specified collection
+    xlsx2mongo.delete(collectionName, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after deleting
+    });
+
+    // Update data from the specified collection
+    //  to update single row
+    const updateCriteria = { 'Name': 'efrwdawd' };
+    const updateData = { $set: { 'Name': 'John Doe' } };
+    xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after updating
+    }); 
+
+    // to update multiple rows
+    const updateCriteriaMultiple = { 'Name': 'dwgdrthg', 'Address': 'grgdrgd' };
+    const updateDataMultiple = { $set: { 'Name': 'Kurizu', 'Address': 'poopy' } };
+    xlsx2mongo.update(collectionName, updateCriteriaMultiple, updateDataMultiple, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after updating
+    });
+
+    // Find data from the specified collection
+    const findCriteria = { 'Name': 'Kurizu' };   
+    xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages).then((res) => {
+        console.log(res);
+        mongoose.connection.close(); // Close the MongoDB connection after finding
+    });
+
+    // Avoid running the above functions at the same time
+    // you can remove the .then() if you don't want to close the connection
 })
 .catch((err) => {
     console.error('Error:', err);
