@@ -1,7 +1,7 @@
 const ExcelJS = require('exceljs');
 const mongoose = require('mongoose');
 
-let workbook, worksheet, jsonData, columnNames ;
+let workbook, worksheet, jsonData, columnNames;
 let schema = {}
 
 const SetupInit = async (filePath) => {
@@ -68,6 +68,32 @@ const ImportData = async (collectionName, showConsoleMessages = true) => {
         : null;
 };
 
+const ExportData = async (collectionName, filePath, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('export')
+        : null;
+
+    const docs = await YourModel.find().exec();
+    const rows = docs.map((doc) => {
+        const row = [];
+        columnNames.forEach((columnName) => {
+            row.push(doc[columnName]);
+        });
+        return row;
+    });
+    rows.unshift(columnNames);
+
+    const newWorkbook = new ExcelJS.Workbook();
+    const newWorksheet = newWorkbook.addWorksheet('Sheet1');
+    newWorksheet.addRows(rows);
+    await newWorkbook.xlsx.writeFile(filePath);
+
+    showConsoleMessages
+        ? console.log('Data exported successfully.') && console.timeEnd('export')
+        : null;
+};
+
 const AddData = async (collectionName, filePath, showConsoleMessages = true) => {
     await SetupInit(filePath);
     const YourModel = SetupSchema(collectionName);
@@ -110,6 +136,51 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
         : null;
 };
 
-module.exports.init = SetupInit;
-module.exports.import = ImportData;
-module.exports.add = AddData;
+const DeleteData = async (collectionName, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('delete')
+        : null;
+
+    await YourModel.deleteMany({});
+    showConsoleMessages
+        ? console.log('Data deleted successfully.') && console.timeEnd('delete')
+        : null;
+};
+
+const UpdateData = async (collectionName, updateCriteria, updateData, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('update')
+        : null;
+
+    const result = await YourModel.updateMany(updateCriteria, updateData);
+
+    showConsoleMessages
+        ? console.log(`${result.modifiedCount} document(s) updated.`) && console.timeEnd('update')
+        : null;
+};
+
+const FindData = async (collectionName, findCriteria, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('find')
+        : null;
+
+    const result = await YourModel.find(findCriteria);
+
+    showConsoleMessages
+        ? console.log(`${result.length} document(s) found.`) && console.timeEnd('find')
+        : null;
+    return result;
+};
+
+module.exports = {
+    init: SetupInit,
+    import: ImportData,
+    export: ExportData,
+    add: AddData,
+    delete: DeleteData,
+    update: UpdateData,
+    find: FindData
+};  
