@@ -83,77 +83,42 @@ Check the usage section for more info. <br>
 
 ## Functions
 
+Init function is required to be run before any other function. <br>
 ```javascript
-
-const xlsx2mongo = require('xlsx-mongo');
-const mongoose = require('mongoose');
-require('dotenv').config()
-
-const path = require('path');
-const filePath = path.join(__dirname, 'Test2.xlsx'); // Path to the excel file
-
-xlsx2mongo.init(filePath);
-// Init function is used to setup the file path
-
-const collectionName = 'test';
-// Collection name is the name of the collection in which you want to import the data
-
-// Set MONGO_URL in .env file to your mongodb connection string
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }) 
-.then(async () => {
-
-    // Import data from the Excel file to the specified collection
-    xlsx2mongo.import(collectionName, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after import
-    });
-
-    // // Add data from the Excel file to the specified collection
-    xlsx2mongo.add(collectionName, filePath, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after adding
-    });
-
-    // Export data from the specified collection to the Excel file
-    const exportFilePath = path.join(__dirname, 'Export.xlsx');
-    xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages).then(() => {
-      mongoose.connection.close(); // Close the MongoDB connection after exporting
-    });
-
-    // Delete data from the specified collection
-    xlsx2mongo.delete(collectionName, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after deleting
-    });
-
-    // Update data from the specified collection
-    //  to update single row
-    const updateCriteria = { 'Name': 'efrwdawd' };
-    const updateData = { $set: { 'Name': 'John Doe' } };
-    xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after updating
-    }); 
-
-    // to update multiple rows
-    const updateCriteriaMultiple = { 'Name': 'dwgdrthg', 'Address': 'grgdrgd' };
-    const updateDataMultiple = { $set: { 'Name': 'Kurizu', 'Address': 'poopy' } };
-    xlsx2mongo.update(collectionName, updateCriteriaMultiple, updateDataMultiple, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after updating
-    });
-
-    // Find data from the specified collection
-    const findCriteria = { 'Name': 'Kurizu' };   
-    xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages).then((res) => {
-        console.log(res);
-        mongoose.connection.close(); // Close the MongoDB connection after finding
-    });
-
-    // Avoid running the above functions at the same time
-    // you can remove the .then() if you don't want to close the connection
-    
-})
-.catch((err) => {
-    console.error('Error:', err);
-});
-
+xlsxMongo.init(filePath);
 ```
+
+Import data from excel file to the specified mongodb collection. <br>
+```javascript
+xlsxMongo.import(collectionName, showConsoleMessages);
+```
+
+Export data from the specified mongodb collection to excel file. <br>
+```javascript
+const exportFilePath = path.join(__dirname, 'Export.xlsx');
+xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages)
+```
+
+Add data from excel file to the specified mongodb collection. <br>
+```javascript
+xlsxMongo.add(collectionName, filePath, showConsoleMessages);
+```
+
+Delete data from the specified mongodb collection. <br>
+```javascript
+xlsxMongo.delete(collectionName, showConsoleMessages);
+```
+
+Update data from the specified mongodb collection. <br>
+```javascript
+xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessages)
+```
+
+Find data from the specified mongodb collection. <br>
+```javascript
+xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages)
+```
+
 Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -1,4 +1,4 @@
-const xlsx2mongo = require('../src/xlsx-mongo');
+const xlsx2mongo = require('xlsx-mongo');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const path = require('path');
