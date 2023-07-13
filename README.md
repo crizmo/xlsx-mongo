@@ -26,8 +26,6 @@
   </p>
 </div>
     
-
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -48,8 +46,6 @@
   </ol>
 </details>
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 Seamless Integration for Importing, Exporting, and Manipulating Data between XLSX and MongoDB. <br>
@@ -243,8 +239,6 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.

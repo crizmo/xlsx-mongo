@@ -15,10 +15,13 @@
     "xlsx",
     "mongodb",
     "import",
+    "export",
     "add",
     "data",
     "file",
-    "mongoose"
+    "mongoose",
+    "crud",
+    "excel"
   ],
   "author": "Kurizu",
   "license": "MIT",
