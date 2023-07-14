@@ -100,6 +100,12 @@ Add data from excel file to the specified mongodb collection. <br>
 xlsxMongo.add(collectionName, filePath, showConsoleMessages);
 ```
 
+Insert data to the specified mongodb collection. <br>
+```javascript
+const insertData = { 'Name': 'Kurizu', 'Address': 'poopy' };
+xlsx2mongo.insert(collectionName, insertData, showConsoleMessages)
+```
+
 Delete data from the specified mongodb collection. <br>
 ```javascript
 xlsxMongo.delete(collectionName, showConsoleMessages);
@@ -113,6 +119,13 @@ xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessage
 Find data from the specified mongodb collection. <br>
 ```javascript
 xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages)
+```
+
+Find data with projection from the specified mongodb collection. <br>
+```javascript
+const findCriteriaPro = { 'Name': 'Kurizu' };
+const projection = { 'Name': 1 };
+xlsx2mongo.findWithProjection(collectionName, findCriteriaPro, projection, showConsoleMessages)
 ```
 
 Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
@@ -147,6 +160,13 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
         mongoose.connection.close(); // Close the MongoDB connection after adding
     });
 
+    // Insert data to the specified collection
+    const insertData = { 'Name': 'Kurizu', 'Address': 'poopy' };
+    xlsx2mongo.insert(collectionName, insertData, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after adding
+    });
+    // If you want to insert multiple rows, you can use .add() method instead
+
     // Export data from the specified collection to the Excel file
     const exportFilePath = path.join(__dirname, 'Export.xlsx');
     xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages).then(() => {
@@ -176,6 +196,14 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     // Find data from the specified collection
     const findCriteria = { 'Name': 'Kurizu' };   
     xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages).then((res) => {
+        console.log(res);
+        mongoose.connection.close(); // Close the MongoDB connection after finding
+    });
+
+    // Find data with projection
+    const findCriteriaPro = { 'Name': 'Kurizu' };
+    const projection = { 'Name': 1 };
+    xlsx2mongo.findWithProjection(collectionName, findCriteriaPro, projection, showConsoleMessages).then((res) => {
         console.log(res);
         mongoose.connection.close(); // Close the MongoDB connection after finding
     });
