@@ -136,6 +136,19 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
         : null;
 };
 
+const InsertData = async (collectionName, insertData, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('insert')
+        : null;
+
+    await YourModel.collection.insertOne(insertData);
+
+    showConsoleMessages
+        ? console.log('Data inserted successfully.') && console.timeEnd('insert')
+        : null;
+};
+
 const DeleteData = async (collectionName, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
@@ -175,12 +188,28 @@ const FindData = async (collectionName, findCriteria, showConsoleMessages = true
     return result;
 };
 
+const FindDataWithProjection = async (collectionName, findCriteria, projection, showConsoleMessages = true) => {
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB') && console.time('find')
+        : null;
+        
+    const result = await YourModel.find(findCriteria, projection);
+
+    showConsoleMessages
+        ? console.log(`${result.length} document(s) found.`) && console.timeEnd('find')
+        : null;
+    return result;
+};
+
 module.exports = {
     init: SetupInit,
     import: ImportData,
     export: ExportData,
     add: AddData,
+    insert: InsertData,
     delete: DeleteData,
     update: UpdateData,
-    find: FindData
-};  
+    find: FindData,
+    findWithProjection: FindDataWithProjection
+};
