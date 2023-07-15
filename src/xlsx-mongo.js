@@ -40,7 +40,7 @@ const SetupSchema = (collectionName) => {
 const ImportData = async (collectionName, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('import')
+        ? console.log('Connected to MongoDB')
         : null;
 
     if (await YourModel.countDocuments().exec() === 0) {
@@ -64,14 +64,14 @@ const ImportData = async (collectionName, showConsoleMessages = true) => {
     }
 
     showConsoleMessages
-        ? console.log('Data imported successfully.') && console.timeEnd('import')
+        ? console.log('Data imported successfully.')
         : null;
 };
 
 const ExportData = async (collectionName, filePath, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('export')
+        ? console.log('Connected to MongoDB')
         : null;
 
     const docs = await YourModel.find().exec();
@@ -90,7 +90,7 @@ const ExportData = async (collectionName, filePath, showConsoleMessages = true) 
     await newWorkbook.xlsx.writeFile(filePath);
 
     showConsoleMessages
-        ? console.log('Data exported successfully.') && console.timeEnd('export')
+        ? console.log('Data exported successfully.')
         : null;
 };
 
@@ -98,7 +98,7 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
     await SetupInit(filePath);
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('import')
+        ? console.log('Connected to MongoDB')
         : null;
 
     const existingDataCount = await YourModel.countDocuments().exec();
@@ -132,58 +132,58 @@ const AddData = async (collectionName, filePath, showConsoleMessages = true) => 
     }
 
     showConsoleMessages
-        ? console.log('Data added successfully to an existing collection.') && console.timeEnd('import')
+        ? console.log('Data added successfully to an existing collection.')
         : null;
 };
 
 const InsertData = async (collectionName, insertData, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('insert')
+        ? console.log('Connected to MongoDB')
         : null;
 
     await YourModel.collection.insertOne(insertData);
 
     showConsoleMessages
-        ? console.log('Data inserted successfully.') && console.timeEnd('insert')
+        ? console.log('Data inserted successfully.')
         : null;
 };
 
 const DeleteData = async (collectionName, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('delete')
+        ? console.log('Connected to MongoDB')
         : null;
 
     await YourModel.deleteMany({});
     showConsoleMessages
-        ? console.log('Data deleted successfully.') && console.timeEnd('delete')
+        ? console.log('Data deleted successfully.')
         : null;
 };
 
 const UpdateData = async (collectionName, updateCriteria, updateData, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('update')
+        ? console.log('Connected to MongoDB')
         : null;
 
     const result = await YourModel.updateMany(updateCriteria, updateData);
 
     showConsoleMessages
-        ? console.log(`${result.modifiedCount} document(s) updated.`) && console.timeEnd('update')
+        ? console.log(`${result.modifiedCount} document(s) updated.`)
         : null;
 };
 
 const FindData = async (collectionName, findCriteria, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('find')
+        ? console.log('Connected to MongoDB')
         : null;
 
     const result = await YourModel.find(findCriteria);
 
     showConsoleMessages
-        ? console.log(`${result.length} document(s) found.`) && console.timeEnd('find')
+        ? console.log(`${result.length} document(s) found.`)
         : null;
     return result;
 };
@@ -191,15 +191,38 @@ const FindData = async (collectionName, findCriteria, showConsoleMessages = true
 const FindDataWithProjection = async (collectionName, findCriteria, projection, showConsoleMessages = true) => {
     const YourModel = SetupSchema(collectionName);
     showConsoleMessages
-        ? console.log('Connected to MongoDB') && console.time('find')
+        ? console.log('Connected to MongoDB')
         : null;
         
     const result = await YourModel.find(findCriteria, projection);
 
     showConsoleMessages
-        ? console.log(`${result.length} document(s) found.`) && console.timeEnd('find')
+        ? console.log(`${result.length} document(s) found.`)
         : null;
     return result;
+};
+
+const ReplaceData = async (collectionName, replaceFilePath, showConsoleMessages = true) => {
+    await SetupInit(replaceFilePath);
+    const YourModel = SetupSchema(collectionName);
+    showConsoleMessages
+        ? console.log('Connected to MongoDB')
+        : null;
+
+    await YourModel.deleteMany({});
+    await YourModel.insertMany(
+        jsonData.map((row) => {
+            const doc = {};
+            columnNames.forEach((columnName, index) => {
+                doc[columnName] = row[index] || null;
+            });
+            return doc;
+        })
+    );
+    
+    showConsoleMessages
+        ? console.log('Data replaced successfully.')
+        : null;
 };
 
 module.exports = {
@@ -211,5 +234,6 @@ module.exports = {
     delete: DeleteData,
     update: UpdateData,
     find: FindData,
-    findWithProjection: FindDataWithProjection
+    findWithProjection: FindDataWithProjection,
+    replace: ReplaceData
 };

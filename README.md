@@ -128,6 +128,12 @@ const projection = { 'Name': 1 };
 xlsx2mongo.findWithProjection(collectionName, findCriteriaPro, projection, showConsoleMessages)
 ```
 
+Replace data with new excel file <br>
+```javascript
+const replaceFilePath = path.join(__dirname, 'Replace.xlsx');
+xlsx2mongo.replace(collectionName, replaceFilePath, showConsoleMessages)
+```
+
 Check env_example file for more info - <a href="/tests/.env_example">env_example</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -206,6 +212,12 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     xlsx2mongo.findWithProjection(collectionName, findCriteriaPro, projection, showConsoleMessages).then((res) => {
         console.log(res);
         mongoose.connection.close(); // Close the MongoDB connection after finding
+    });
+
+    // Replace data with new excel file
+    const replaceFilePath = path.join(__dirname, 'Replace.xlsx');
+    xlsx2mongo.replace(collectionName, replaceFilePath, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after replacing
     });
 
     // Avoid running the above functions at the same time

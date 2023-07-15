@@ -72,6 +72,12 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
         mongoose.connection.close(); // Close the MongoDB connection after finding
     });
 
+    // Replace data with new excel file
+    const replaceFilePath = path.join(__dirname, 'Replace.xlsx');
+    xlsx2mongo.replace(collectionName, replaceFilePath, showConsoleMessages).then(() => {
+        mongoose.connection.close(); // Close the MongoDB connection after replacing
+    });
+
     // Avoid running the above functions at the same time
 })
 .catch((err) => {
