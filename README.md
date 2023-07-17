@@ -121,30 +121,29 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     
     // Import data from the Excel file to the specified collection
     xlsx2mongo.import(collectionName, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after import
+        mongoose.connection.close();
     });
 
     // // Add data from the Excel file to the specified collection
     xlsx2mongo.add(collectionName, filePath, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after adding
+        mongoose.connection.close();
     });
 
     // Insert data to the specified collection
     const insertData = { 'Name': 'Kurizu', 'Address': 'poopy' };
     xlsx2mongo.insert(collectionName, insertData, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after adding
+        mongoose.connection.close();
     });
-    // If you want to insert multiple rows, you can use .add() method instead
 
     // Export data from the specified collection to the Excel file
     const exportFilePath = path.join(__dirname, 'Export.xlsx');
     xlsx2mongo.export(collectionName, exportFilePath, showConsoleMessages).then(() => {
-      mongoose.connection.close(); // Close the MongoDB connection after exporting
+      mongoose.connection.close();
     });
 
     // Delete data from the specified collection
     xlsx2mongo.delete(collectionName, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after deleting
+        mongoose.connection.close();
     });
 
     // Update data from the specified collection
@@ -152,21 +151,21 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     const updateCriteria = { 'Name': 'efrwdawd' };
     const updateData = { $set: { 'Name': 'John Doe' } };
     xlsx2mongo.update(collectionName, updateCriteria, updateData, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after updating
+        mongoose.connection.close();
     }); 
 
     // to update multiple rows
     const updateCriteriaMultiple = { 'Name': 'dwgdrthg', 'Address': 'grgdrgd' };
     const updateDataMultiple = { $set: { 'Name': 'Kurizu', 'Address': 'poopy' } };
     xlsx2mongo.update(collectionName, updateCriteriaMultiple, updateDataMultiple, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after updating
+        mongoose.connection.close();
     });
 
     // Find data from the specified collection
     const findCriteria = { 'Name': 'Kurizu' };   
     xlsx2mongo.find(collectionName, findCriteria, showConsoleMessages).then((res) => {
         console.log(res);
-        mongoose.connection.close(); // Close the MongoDB connection after finding
+        mongoose.connection.close();
     });
 
     // Find data with projection
@@ -174,17 +173,16 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     const projection = { 'Name': 1 };
     xlsx2mongo.findWithProjection(collectionName, findCriteriaPro, projection, showConsoleMessages).then((res) => {
         console.log(res);
-        mongoose.connection.close(); // Close the MongoDB connection after finding
+        mongoose.connection.close();
     });
 
     // Replace data with new excel file
     const replaceFilePath = path.join(__dirname, 'Replace.xlsx');
     xlsx2mongo.replace(collectionName, replaceFilePath, showConsoleMessages).then(() => {
-        mongoose.connection.close(); // Close the MongoDB connection after replacing
+        mongoose.connection.close();
     });
 
     // Avoid running the above functions at the same time
-    // you can remove the .then() if you don't want to close the connection
 })
 .catch((err) => {
     console.error('Error:', err);
