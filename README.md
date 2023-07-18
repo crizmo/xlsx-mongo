@@ -194,6 +194,8 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 - [Github](https://github.com/crizmo/xlsx-mongo)
 - [Example](https://github.com/crizmo/xlsx-mongo/tree/main/tests)
 
+If you want me to add more functions or have any issues with the package, feel free to contact me on discord `kurizu.taz` or open an issue on github.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
