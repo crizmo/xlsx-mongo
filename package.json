@@ -1,6 +1,6 @@
 {
   "name": "xlsx-mongo",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Streamlined Import, Export, and CRUD Operations between XLSX and MongoDB",
   "main": "index.js",
   "scripts": {
