@@ -38,9 +38,9 @@ Seamless Integration for Importing, Exporting, and Manipulating Data between XLS
    npm install xlsx-mongo
    ```
 6. Require the package in your main file <br>
-   ```JS
-   const xlsxMongo = require('xlsx-mongo');
-   ``
+```JS
+const xlsxMongo = require('xlsx-mongo');
+```
 
 ## Functions
 
